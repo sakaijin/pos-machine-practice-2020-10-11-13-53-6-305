@@ -12,17 +12,17 @@ public class PosMachine {
         List<String> barcodeSet = barcodes.stream().distinct().collect(Collectors.toList());
         for(String barcode: barcodeSet){
             int timesCalled = timesCalled(barcodes, barcode);
-            List<ItemInfo> name = getItem(barcode);
-            totalPrice += calculateTotalPrices(timesCalled, name.get(0).getPrice());
-            receipt += "Name: " + name.get(0).getName() + ", " + "Quantity: " + timesCalled + ", " + "Unit price: " +
-                    name.get(0).getPrice() + " (yuan), " + "Subtotal: " + timesCalled*name.get(0).getPrice() + " (yuan)"
+            List<ItemInfo> details = getItem(barcode);
+            totalPrice += calculateSubtotal(timesCalled, details.get(0).getPrice());
+            receipt += "Name: " + details.get(0).getName() + ", " + "Quantity: " + timesCalled + ", " + "Unit price: " +
+                    details.get(0).getPrice() + " (yuan), " + "Subtotal: " + timesCalled*details.get(0).getPrice() + " (yuan)"
                     + "\r\n";
         }
         return receipt + "----------------------" + "\r\n" + "Total: " + totalPrice + " (yuan)" +
                 "\r\n" + "**********************";
     }
 
-    private int calculateTotalPrices(int timesCalled, int unitPrices) {
+    private int calculateSubtotal(int timesCalled, int unitPrices) {
         return timesCalled * unitPrices;
     }
 
